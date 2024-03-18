@@ -2,9 +2,9 @@ import { createCipheriv, randomBytes, createDecipheriv} from 'crypto'
 
 export function Encrypt(password:string)
 {
-const chave = randomBytes(32);
+const key = randomBytes(32);
 const vi = randomBytes(16);
-const cipher = createCipheriv('aes256', chave, vi);
+const cipher = createCipheriv('aes256', key, vi);
 const mensagemCifrada = cipher.update(password, 'utf-8', 'hex') + cipher.final('hex');
 
 return mensagemCifrada;
