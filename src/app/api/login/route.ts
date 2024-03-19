@@ -1,7 +1,8 @@
 
+import { criatedHash } from "@/lib/Hash";
 import { getJwtSecretKey } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { User } from "@prisma/client";
+import { user } from "@prisma/client";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,18 +10,20 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request:NextRequest) {
   const body = await request.json();
 
-  const users: User = await prisma.user.findUniqueOrThrow({
+  const users: user = await prisma.user.findFirstOrThrow({
 	where: {
 		email: body.email,
+    
 	},
 });
-  if (body.email === users.email && body.senha === users.senha) {
+  if (body.email === users.email && criatedHash(body.senha) === users.senha) {
     const token = await new SignJWT({
       email: body.email,
+      random:users.account_id
     })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime("3600s") 
+      .setExpirationTime("21600s") 
       .sign(getJwtSecretKey());
     const response = NextResponse.json(
       { success: true },

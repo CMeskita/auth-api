@@ -4,17 +4,31 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:1234@localhost:5432/MallCatalog?schema=public"
 }
 
-model User {
-  id        String   @id @unique @default(uuid()) @db.VarChar(255)
-  createdAt DateTime @default(now())
-  email     String   @unique @db.VarChar(36)
-  senha     String   @db.VarChar(36)
+model account {
+  account_id String  @id(map: "account_pk") @db.VarChar(40)
+  slug       String  @db.VarChar(100)
+  name       String  @db.VarChar(100)
+  plan_id    Int
+  domain     String  @db.VarChar(100)
+  status     Int
+  capture_id Int
+  email      String  @db.VarChar(100)
+  logo       String? @db.VarChar(500)
+ 
 }
 
-model Auth {
-  id    String  @id @unique @default(uuid()) @db.VarChar(255)
-  token String? @db.VarChar
+
+model user {
+  id                String   @id @unique @default(uuid()) @db.VarChar(255)
+  account_id        String    @db.VarChar(40)
+  perfil_id         Int
+  usuario           String    @db.VarChar(50)
+  senha             String    @db.VarChar(200)
+  email             String    @db.VarChar(100)
+  data_habilitao    DateTime  @default(now())
+  data_desabilitado DateTime? @db.Date
+ 
 }
