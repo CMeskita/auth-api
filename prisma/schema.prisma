@@ -4,11 +4,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:1234@localhost:5432/MallCatalog?schema=public"
+  url      = env("DATABASE_URL")
 }
 
 model account {
-  account_id String  @id(map: "account_pk") @db.VarChar(40)
+  account_id String  @id(map: "account_pk")
   slug       String  @db.VarChar(100)
   name       String  @db.VarChar(100)
   plan_id    Int
@@ -19,11 +19,15 @@ model account {
   logo       String? @db.VarChar(500)
  
 }
+model perfil {
+  perfil_id         Int @id(map: "perfil_pk")
+  descricao         String  @db.VarChar(100) 
+}
 
 
 model user {
   id                String   @id @unique @default(uuid()) @db.VarChar(255)
-  account_id        String    @db.VarChar(40)
+  account_id        String    
   perfil_id         Int
   usuario           String    @db.VarChar(50)
   senha             String    @db.VarChar(200)

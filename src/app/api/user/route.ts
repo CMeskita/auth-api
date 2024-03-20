@@ -12,43 +12,30 @@ export async function POST(request: NextRequest) {
 		debugger;
 
 //verificar se usuario já cadastrado
-const users: user = await prisma.user.findFirstOrThrow({
-	where: {
-		email : String(newUser.email),
-	},
-
-});
-if (users===null) {
-	
-
-//pegar account por email		
-	const accounts: account = await prisma.account.findFirstOrThrow({
-		where: {
-			email : String(newUser.email),
-		},
-	
-	});
-
-	newUser.account_id=accounts.account_id;
+			const result = await prisma.user.findFirst({
+				where: {
+					email : String(newUser.email),
+				},
+			
+			});
+			if(result){
+				return new NextResponse(JSON.stringify({ message: "STATUS_CODE_DUPLICATE_RECORD"}), {
+					status: 409,
+					statusText: 'Registro de Email já existe',
+				});
+			}
+//criando usuario
 	newUser.senha=criatedHash(newUser.senha);
 	newUser.data_desabilitado=null;
-	
-//criando usuario
 	const createdUser: user = await prisma.user.create({
 		data: newUser,
+		
 	});
 	return new NextResponse(JSON.stringify(createdUser), {
 		status: 201,
 		statusText: 'Created',
 	});
-}
-else{
-	return new NextResponse(JSON.stringify({ message: "STATUS_CODE_DUPLICATE_RECORD" }), {
-		status: 409,
-		statusText: 'Registro já existe',
-	});
 
-}
 } catch (e) {
 	if (e instanceof Prisma.PrismaClientKnownRequestError) {
 		return new NextResponse(JSON.stringify({ message: e.message }), {

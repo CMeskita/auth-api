@@ -1,7 +1,7 @@
 
 
 import prisma from '@/lib/prisma';
-import { user } from '@prisma/client';
+import { user,Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 import { NextResponse, NextRequest } from 'next/server';
@@ -23,13 +23,15 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 			status: 200,
 			statusText: 'OK',
 		});
-	} catch (error) {
-		const msgError = (error as PrismaClientKnownRequestError).message;
-
-		return new NextResponse(JSON.stringify({ message: msgError }), {
-			status: 404,
-			statusText: 'Not Found',
-		});
+	} catch (e) {
+		
+		if (e instanceof Prisma.PrismaClientKnownRequestError) {
+			return new NextResponse(JSON.stringify({ message: e.message }), {
+				status: 404,
+				statusText: 'Error',
+			});
+		}
+		throw e
 	}
 }
 export async function PUT(request: NextRequest, context: { params: FindById }) {
@@ -47,13 +49,15 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 			status: 200,
 			statusText: 'OK',
 		});
-	} catch (error) {
-		const msgError = (error as PrismaClientKnownRequestError).meta?.cause;
-
-		return new NextResponse(JSON.stringify({ message: msgError }), {
-			status: 404,
-			statusText: 'Not Found',
-		});
+	} catch (e) {
+		
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				  return new NextResponse(JSON.stringify({ message: e.message }), {
+					  status: 404,
+					  statusText: 'Error',
+				  });
+			  }
+			  throw e
 	}
 }
 export async function DELETE(
@@ -71,12 +75,13 @@ export async function DELETE(
 			status: 204,
 			statusText: 'No Content',
 		});
-	} catch (error) {
-		const msgError = (error as PrismaClientKnownRequestError).meta?.cause;
-
-		return new NextResponse(JSON.stringify({ message: msgError }), {
-			status: 404,
-			statusText: 'Not Found',
-		});
+	} catch (e) {		
+		if (e instanceof Prisma.PrismaClientKnownRequestError) {
+			return new NextResponse(JSON.stringify({ message: e.message }), {
+				status: 404,
+				statusText: 'Error',
+			});
+		}
+		throw e
 	}
 }
