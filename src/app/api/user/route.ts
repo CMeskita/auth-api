@@ -1,7 +1,7 @@
 
 import { criatedHash } from "@/lib/Hash";
 import prisma from "@/lib/prisma";
-import { user ,account, Prisma} from "@prisma/client";
+import { user , Prisma} from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 

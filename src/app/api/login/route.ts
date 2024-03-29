@@ -20,21 +20,30 @@ try {
  
   
     if (body.email === users.email && criatedHash(body.senha) === users.senha) {
-      const token = await new SignJWT({
+      const accessToken = await new SignJWT({
         email: body.email,
         random:users.account_id
       })
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("21600s") 
+        .setExpirationTime("21600s") //6hs
         .sign(getJwtSecretKey());
-      const response = NextResponse.json(
-        { success: true },
-        { status: 200, headers: { "content-type": "application/json" } }
+   
+      const refreshtoken = await new SignJWT({
+        token: accessToken        
+      })
+        .setProtectedHeader({ alg: "HS256" })
+        .setIssuedAt()
+        .setExpirationTime("32400s") //9hs
+        .sign(getJwtSecretKey());
+      const response = NextResponse.json(       
+        {sucess:true},
+        { status: 200, headers: { "content-type": "application/json" ,"Authorization":`${accessToken}`} }
       );
+    
       response.cookies.set({
-        name: "token",
-        value: token,
+        name: "refreshtoken",
+        value: refreshtoken,
         path: "/",
       });
       return response;

@@ -26,13 +26,13 @@ model perfil {
 
 
 model user {
-  id                String   @id @unique @default(uuid()) @db.VarChar(255)
+  user_id                String   @id @unique @default(uuid()) @db.VarChar(255)
   account_id        String    
   perfil_id         Int
   usuario           String    @db.VarChar(50)
   senha             String    @db.VarChar(200)
   email             String    @db.VarChar(100)
-  data_habilitao    DateTime  @default(now())
+  data_habilitado   DateTime  @default(now())
   data_desabilitado DateTime? @db.Date
  
 }
