@@ -2,7 +2,7 @@
 import { criatedHash } from "@/lib/Hash";
 import { getJwtSecretKey } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { user ,Prisma} from "@prisma/client";
+import { Prisma, user } from "@prisma/client";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
