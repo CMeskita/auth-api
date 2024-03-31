@@ -2,20 +2,18 @@
 
 import prisma from '@/lib/prisma';
 import { user,Prisma } from '@prisma/client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-
 import { NextResponse, NextRequest } from 'next/server';
 
 
 type FindById = {
-	id : string;
+	user_id : string;
 };
 
 export async function GET(request: NextRequest, context: { params: FindById }) {
 	try {
 		const users: user = await prisma.user.findUniqueOrThrow({
 			where: {
-			id : String(context.params.id ),
+				user_id : String(context.params.user_id ),
 			},
 		});
 
@@ -40,7 +38,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 	try {
 		const updatedUser: user = await prisma.user.update({
 			where: {
-				id : String(context.params.id ),
+				user_id : String(context.params.user_id ),
 			},
 			data: newUserData,
 		});
@@ -67,7 +65,7 @@ export async function DELETE(
 	try {
 		await prisma.user.delete({
 			where: {
-				id : String(context.params.id),
+				user_id : String(context.params.user_id),
 			},
 		});
 
