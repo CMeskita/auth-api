@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "build":"*.ts",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
