@@ -1,6 +1,7 @@
 import { Prisma, user } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { verifyJwtToken,decodifcarJwtToken, gerarAcessToken } from "@/lib/auth";
+import { verifyJwtToken,decodifcarJwtToken,  getJwtSecretKey } from "@/lib/auth";
+import { SignJWT } from "jose";
 
 export async function POST(request:NextRequest) {
    debugger;
@@ -32,23 +33,26 @@ export async function POST(request:NextRequest) {
             });
     }else
         {          
-           const newaccessToken=gerarAcessToken(email as string ,account_id as string) 
-           return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), {
-            status: 401,
-            statusText: 'Token Expirado',
-            headers:{ "content-type": "application/json" ,"Authorization":`${newaccessToken}`}
-           
-        });
-           
+            const newaccessToken = await new SignJWT({
+                email: email,
+                random:account_id
+              })
+                .setProtectedHeader({ alg: "HS256" })
+                .setIssuedAt()
+                .setExpirationTime("21600s") //6hs
+                .sign(getJwtSecretKey());
+                return new NextResponse(JSON.stringify({ sucess: true }), {
+                    status: 401,
+                    statusText: 'Token Expirado',
+                    headers: { "content-type": "application/json" ,"Authorization":`${newaccessToken}`} 
+                
+                });
         }
-    
-     // return response;  { status: 401, headers:'Access Denied. No token provided'}
 }
 
 return NextResponse.json({ email:email,account:account_id});
-      
- 
-  } catch (e) {
+}
+ catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
           return new NextResponse(JSON.stringify({ message: e.message }), {
               status: 500,

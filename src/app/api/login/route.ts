@@ -11,27 +11,20 @@ export async function POST(request:NextRequest) {
   const body = await request.json();
 try {
   const users: user = await prisma.user.findFirstOrThrow({
-    where: {
-      email: body.email,
-      
-    },
-    
-  });
- 
+
+    where: {email: body.email},});
   
     if (body.email === users.email && criatedHash(body.senha) === users.senha) {
       const accessToken = await new SignJWT({
         email: body.email,
-        random:users.account_id
-      })
+        random:users.account_id})
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
         .setExpirationTime("21600s") //6hs
         .sign(getJwtSecretKey());
    
       const refreshtoken = await new SignJWT({
-        token: accessToken        
-      })
+        token: accessToken})
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
         .setExpirationTime("32400s") //9hs
