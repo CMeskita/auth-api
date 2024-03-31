@@ -8,6 +8,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(request:NextRequest) {
+  const timeAcesstoken  = process.env.EXPIRATION_TIME_ACESSTOKEN;
+  const timeRefreshtoken  = process.env.EXPIRATION_TIME_REFRESHTOKEN;
   const body = await request.json();
 try {
   const users: user = await prisma.user.findFirstOrThrow({
@@ -20,14 +22,14 @@ try {
         random:users.account_id})
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("21600s") //6hs
+        .setExpirationTime(`${timeAcesstoken}`) //6hs
         .sign(getJwtSecretKey());
    
       const refreshtoken = await new SignJWT({
         token: accessToken})
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("32400s") //9hs
+        .setExpirationTime(`${timeRefreshtoken}`) //9hs
         .sign(getJwtSecretKey());
       const response = NextResponse.json(       
         {sucess:true},
