@@ -6,7 +6,15 @@ import { Prisma, user } from "@prisma/client";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
-
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: Hello World!
+ */
 export async function POST(request:NextRequest) {
   const timeAcesstoken  = process.env.EXPIRATION_TIME_ACESSTOKEN;
   const timeRefreshtoken  = process.env.EXPIRATION_TIME_REFRESHTOKEN;
