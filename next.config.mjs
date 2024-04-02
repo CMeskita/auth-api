@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    apiDirectory:  "app/api"  
-};
+const nextConfig = {};
 
 export default nextConfig;
 
