@@ -21,7 +21,7 @@ export const getApiDocs = async () => {
         user:{get:{'api/user':[Object]}},
        //user:{post:{'api/user':[Object]}},
        // userget:{get:{'api/user':[Object]}},
-        //auth:{post:{'api/auth':[Object]}}
+        auth:{post:{'api/auth':[Object]}}
         
      },
       components: {
