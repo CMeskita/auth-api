@@ -95,7 +95,7 @@ export const getApiDocs = async () => {
       security: [],
       servers: [
         {
-          url: "http://localhost:3000/",
+          url: "https://auth-api-chi.vercel.app",
           description: "API Documentation",
         },
       ],
