@@ -11,18 +11,23 @@ export const getApiDocs = async () => {
         version: '1.0',
         contact:{
             name: "API Support",
-            url: "http://www.exmaple.com/support",
+            url: "https://auth-api-chi.vercel.app/",
             email: "support@example.com",
         }
       },
-     paths:{
+     paths:{ 
+      
+     '/api/login':{
+      post:{
+      summary:"Authenticar usuário",
+      parameters:[],
+      requestBody:{content:{Usuario:{"example":{"email":"danielle@gmail.com","senha":"1231456"},}}},
+      responses:{200:{description:"success"},500:{description:"internal error"}},
      
-        login:{post:{'api/login':[Object]}},
-        user:{get:{'api/user':[Object]}},
-       //user:{post:{'api/user':[Object]}},
-       // userget:{get:{'api/user':[Object]}},
-        auth:{post:{'api/auth':[Object]}}
-        
+
+      }
+     }
+
      },
       components: {
         securitySchemes: {
@@ -35,15 +40,19 @@ export const getApiDocs = async () => {
         
         schemas: {
             Login: {
-                type: 'object',
-                properties: {}
+                type: 'string',
+                properties: 
+                {
+                  email:"string"
+                  ,senha:"string"
+                }
             },
             User: {
-                type: 'object',
+                type: 'string',
                 properties: {}
             },
             Auth: {
-                type: 'object',
+                type: 'string',
                 properties: {}
             },
         }
@@ -51,7 +60,7 @@ export const getApiDocs = async () => {
       security: [],
       servers: [
         {
-          url: "http://localhost:4001",
+          url: "http://localhost:3000",
           description: "My API Documentation",
         },
       ],

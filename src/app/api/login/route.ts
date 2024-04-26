@@ -6,19 +6,12 @@ import { Prisma, user } from "@prisma/client";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * @swagger
- * /api/login:
- *   post:
- *     description: Returns the hello world
- *     responses:
- *       200:
- *         description: Hello World!
- */
+
 export async function POST(request:NextRequest) {
   const timeAcesstoken  = process.env.EXPIRATION_TIME_ACESSTOKEN;
   const timeRefreshtoken  = process.env.EXPIRATION_TIME_REFRESHTOKEN;
   const body = await request.json();
+ 
 try {
   const users: user = await prisma.user.findFirstOrThrow({
 
@@ -40,10 +33,10 @@ try {
         .setExpirationTime(`${timeRefreshtoken}`) //9hs
         .sign(getJwtSecretKey());
       const response = NextResponse.json(       
-        {sucess:true},
+        {sucess:true,accessToken:accessToken,refreshtoken:refreshtoken},
         { status: 200, headers: { "content-type": "application/json" ,"Authorization":`${accessToken}`} }
-      );
-    
+       
+      );    
       response.cookies.set({
         name: "refreshtoken",
         value: refreshtoken,
