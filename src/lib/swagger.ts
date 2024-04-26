@@ -1,4 +1,6 @@
 import { createSwaggerSpec } from 'next-swagger-doc';
+import { describe } from 'node:test';
+import { debugPort } from 'process';
 
 export const getApiDocs = async () => {
   const spec = createSwaggerSpec({
@@ -12,21 +14,54 @@ export const getApiDocs = async () => {
         contact:{
             name: "API Support",
             url: "https://auth-api-chi.vercel.app/",
-            email: "support@example.com",
+            email: "developer.csharp.js@gmail.com",
         }
       },
-     paths:{ 
-      
-     '/api/login':{
-      post:{
-      summary:"Authenticar usuário",
-      parameters:[],
-      requestBody:{content:{Usuario:{"example":{"email":"danielle@gmail.com","senha":"1231456"},}}},
-      responses:{200:{description:"success"},500:{description:"internal error"}},
-     
+     paths:{          
+     '/api/login':{  
+           
+          post:{ 
+          tags:["login"],                    
+          summary:"Authenticar usuário",
+          parameters:[],
+          requestBody:{content:{Usuario:{"example":{"email":"luzia@Empresainicial.com","senha":"1234"},}}},
+          responses:{200:{description:"success"},500:{description:"internal error"}},           
+          }},
+  
+      '/api/user':{
+           
+            post:{
+              tags:["user"], 
+              summary:"Registrar usuário",
+              
+            },
+            get:{
+              tags:["user"],
+              summary:"Listar usuário",
+              responses:{200:{description:"success"}}
+              
+            },
+           
+            put:{
+              tags:["user"],
+              summary:"Alterar usuário",
 
-      }
-     }
+            }
+          },
+          '/api/user/id':{
+            get:{
+              tags:["user"],
+              summary:"Listar usuário por identifcador único",
+            },
+          }
+           ,
+          '/api/auth':{
+         
+            post:{
+              tags:["auth"], 
+              summary:"Atualizar Token",
+            }
+          }         
 
      },
       components: {
@@ -60,8 +95,8 @@ export const getApiDocs = async () => {
       security: [],
       servers: [
         {
-          url: "https://auth-api-chi.vercel.app/",
-          description: "My API Documentation",
+          url: "http://localhost:3000/",
+          description: "API Documentation",
         },
       ],
     },
