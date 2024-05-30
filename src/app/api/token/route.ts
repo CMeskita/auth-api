@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken,decodifcarJwtToken,  getJwtSecretKey } from "@/lib/auth";
 import { SignJWT } from "jose";
+<<<<<<< HEAD
+=======
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+>>>>>>> parent of 2f47ae9 (update)
 
 export async function POST(request:NextRequest) {
    debugger;
@@ -52,8 +56,13 @@ export async function POST(request:NextRequest) {
 return NextResponse.json({ email:email,account:account_id});
 }
  catch (e) {
+<<<<<<< HEAD
    
           return new NextResponse(JSON.stringify({ message: "error" }), {
+=======
+    if (e instanceof PrismaClientKnownRequestError) {
+          return new NextResponse(JSON.stringify({ message: e.message }), {
+>>>>>>> parent of 2f47ae9 (update)
               status: 500,
               statusText: 'Error',
           });

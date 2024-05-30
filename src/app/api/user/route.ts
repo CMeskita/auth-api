@@ -1,7 +1,6 @@
 
 import { criatedHash } from "@/lib/Hash";
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,8 +37,13 @@ export async function POST(request: NextRequest) {
 	});
 
 } catch (e) {
+<<<<<<< HEAD
 	
 		return new NextResponse(JSON.stringify({ message: "error" }), {
+=======
+	if (e instanceof PrismaClientKnownRequestError) {
+		return new NextResponse(JSON.stringify({ message: e.message }), {
+>>>>>>> parent of 2f47ae9 (update)
 			status: 500,
 			statusText: 'Error',
 		});
