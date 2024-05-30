@@ -6,9 +6,10 @@
     "dev": "next",
     "postinstall": "prisma generate",
     "build": "next build",
-    "start": "next start",
+    "start": "npx prisma generate && next start",
     "lint": "next lint"
   },
+ 
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "@types/jsonwebtoken": "^9.0.6",
