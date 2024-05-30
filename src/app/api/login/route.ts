@@ -50,7 +50,7 @@ try {
     }
     return NextResponse.json({ success: false });
 } catch (e) {
-      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e instanceof Prisma.PrismaClientUnknownRequestError) {
         return new NextResponse(JSON.stringify({ message: e.message }), {
           status: 500,
           statusText: 'Error',
