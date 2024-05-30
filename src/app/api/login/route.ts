@@ -2,7 +2,6 @@
 import { criatedHash } from '@/lib/Hash';
 import { getJwtSecretKey } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -49,14 +48,12 @@ try {
     }
     return NextResponse.json({ success: false });
 } catch (e) {
-  if (e instanceof Prisma.PrismaClientKnownRequestError) {
 
-      return new NextResponse(JSON.stringify({ message: e.message }), {
+      return new NextResponse(JSON.stringify({ message: "Error" }), {
 				status: 500,
 				statusText: 'Error',
 			});
 
-      }
       throw e
 }
  

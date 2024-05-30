@@ -38,13 +38,12 @@ export async function POST(request: NextRequest) {
 	});
 
 } catch (e) {
-	if (e instanceof Prisma.PrismaClientKnownRequestError) {
-		return new NextResponse(JSON.stringify({ message: e.message }), {
+	
+		return new NextResponse(JSON.stringify({ message: "error" }), {
 			status: 500,
 			statusText: 'Error',
 		});
-	}
-	throw e
+		throw e
   }
 }
 export async function GET() {

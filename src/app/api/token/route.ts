@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken,decodifcarJwtToken,  getJwtSecretKey } from "@/lib/auth";
 import { SignJWT } from "jose";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { Prisma } from "@prisma/client";
 
 export async function POST(request:NextRequest) {
    debugger;
@@ -54,12 +52,12 @@ export async function POST(request:NextRequest) {
 return NextResponse.json({ email:email,account:account_id});
 }
  catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-          return new NextResponse(JSON.stringify({ message: e.message }), {
+   
+          return new NextResponse(JSON.stringify({ message: "error" }), {
               status: 500,
               statusText: 'Error',
           });
-      }
+      
       throw e
   }
    

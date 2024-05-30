@@ -76,12 +76,12 @@ export async function DELETE(
 			statusText: 'No Content',
 		});
 	} catch (e) {		
-		if (e instanceof PrismaClientKnownRequestError) {
-			return new NextResponse(JSON.stringify({ message: e.message }), {
-				status: 404,
+		
+			return new NextResponse(JSON.stringify({ message:"Error" }), {
+				status: 500,
 				statusText: 'Error',
 			});
-		}
+		
 		throw e
 	}
 }
