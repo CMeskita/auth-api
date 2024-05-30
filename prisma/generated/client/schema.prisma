@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model account {
+  account_id String  @id(map: "account_pk")
+  slug       String  @db.VarChar(100)
+  name       String  @db.VarChar(100)
+  plan_id    Int
+  domain     String  @db.VarChar(100)
+  status     Int
+  capture_id Int
+  email      String  @db.VarChar(100)
+  logo       String? @db.VarChar(500)
+ 
+}
+model perfil {
+  perfil_id         Int @id(map: "perfil_pk")
+  descricao         String  @db.VarChar(100) 
+}
+
+
+model user {
+  user_id           String @id @unique @default(uuid()) @db.VarChar(255)
+  account_id        String    
+  perfil_id         Int
+  usuario           String    @db.VarChar(50)
+  senha             String    @db.VarChar(200)
+  email             String    @db.VarChar(100)
+  data_habilitado   DateTime  @default(now())
+  data_desabilitado DateTime? @db.Date
+ 
+}
