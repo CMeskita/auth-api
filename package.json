@@ -6,7 +6,7 @@
     "dev": "next",
     "postinstall": "prisma generate",
     "build": "next build",
-    "start": "npx prisma generate && next start",
+    "start": "next start",
     "lint": "next lint"
   },
  
