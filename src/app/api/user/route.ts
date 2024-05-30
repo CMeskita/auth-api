@@ -1,6 +1,7 @@
 
 import { criatedHash } from "@/lib/Hash";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
 	});
 
 } catch (e) {
-	if (e instanceof PrismaClientKnownRequestError) {
+	if (e instanceof Prisma.PrismaClientKnownRequestError) {
 		return new NextResponse(JSON.stringify({ message: e.message }), {
 			status: 500,
 			statusText: 'Error',
