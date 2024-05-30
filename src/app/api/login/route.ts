@@ -24,17 +24,17 @@ try {
       const accessToken = await new SignJWT({
         email: body.email,
         random:users.account_id})
-        .setProtectedHeader({ alg: "HS256" })
-        .setIssuedAt()
-        .setExpirationTime(`${timeAcesstoken}`) //6hs
-        .sign(getJwtSecretKey());
+          .setProtectedHeader({ alg: "HS256" })
+          .setIssuedAt()
+          .setExpirationTime(`${timeAcesstoken}`) //6hs
+          .sign(getJwtSecretKey());
    
       const refreshtoken = await new SignJWT({
         token: accessToken})
-        .setProtectedHeader({ alg: "HS256" })
-        .setIssuedAt()
-        .setExpirationTime(`${timeRefreshtoken}`) //9hs
-        .sign(getJwtSecretKey());
+          .setProtectedHeader({ alg: "HS256" })
+          .setIssuedAt()
+          .setExpirationTime(`${timeRefreshtoken}`) //9hs
+          .sign(getJwtSecretKey());
       const response = NextResponse.json(       
         {sucess:true,accessToken:accessToken,refreshtoken:refreshtoken},
         { status: 200, headers: { "content-type": "application/json" ,"Authorization":`${accessToken}`} }
