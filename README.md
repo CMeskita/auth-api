@@ -40,5 +40,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Vercel
 - Postgres
 
-  ![image](https://github.com/CMeskita/auth-api/assets/30234377/64a320e6-4845-41a9-a2ec-630977fcad46)
+![image](https://github.com/CMeskita/auth-api/assets/30234377/f7b5c080-81e1-4735-8c6a-814ff290e932)
+
 
