@@ -2,7 +2,7 @@
 import { criatedHash } from '@/lib/Hash';
 import { getJwtSecretKey } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { user } from '@prisma/client';
+import '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,7 +15,7 @@ export async function POST(request:NextRequest) {
  
 try {
 
-  const users:user= await prisma.user.findFirstOrThrow({
+  const users= await prisma.user.findFirstOrThrow({
 
     where: {email: body.email}
 
