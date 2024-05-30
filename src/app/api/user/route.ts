@@ -1,13 +1,13 @@
 
 import { criatedHash } from "@/lib/Hash";
 import prisma from "@/lib/prisma";
-import { user , Prisma} from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(request: NextRequest) {
 	
-	const newUser: user = await request.json();
+	const newUser = await request.json();
 	try {
 		debugger;
 
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 //criando usuario
 	newUser.senha=criatedHash(newUser.senha);
 	newUser.data_desabilitado=null;
-	const createdUser: user = await prisma.user.create({
+	const createdUser = await prisma.user.create({
 		data: newUser,
 		
 	});
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 	});
 
 } catch (e) {
-	if (e instanceof Prisma.PrismaClientKnownRequestError) {
+	if (e instanceof PrismaClientKnownRequestError) {
 		return new NextResponse(JSON.stringify({ message: e.message }), {
 			status: 500,
 			statusText: 'Error',
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   }
 }
 export async function GET() {
-	const users: user[] = await prisma.user.findMany();
+	const users  = await prisma.user.findMany();
 
 	return new NextResponse(JSON.stringify(users), {
 		status: 200,
