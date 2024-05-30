@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
-import {Prisma, user } from '@prisma/client';
+import {user } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { NextResponse, NextRequest } from 'next/server';
 
 
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 		});
 	} catch (e) {
 		
-		if (e instanceof Prisma.PrismaClientKnownRequestError) {
+		if (e instanceof PrismaClientKnownRequestError) {
 			return new NextResponse(JSON.stringify({ message: e.message }), {
 				status: 404,
 				statusText: 'Error',
@@ -49,7 +50,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 		});
 	} catch (e) {
 		
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+			if (e instanceof PrismaClientKnownRequestError) {
 				  return new NextResponse(JSON.stringify({ message: e.message }), {
 					  status: 404,
 					  statusText: 'Error',
@@ -75,7 +76,7 @@ export async function DELETE(
 			statusText: 'No Content',
 		});
 	} catch (e) {		
-		if (e instanceof Prisma.PrismaClientKnownRequestError) {
+		if (e instanceof PrismaClientKnownRequestError) {
 			return new NextResponse(JSON.stringify({ message: e.message }), {
 				status: 404,
 				statusText: 'Error',
