@@ -1,7 +1,5 @@
-
-
 import prisma from '@/lib/prisma';
-import { user,Prisma } from '@prisma/client';
+import {Prisma, user } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
 
 
@@ -10,8 +8,7 @@ type FindById = {
 }
 
 export async function GET(request: NextRequest, context: { params: FindById }) {
-	debugger;
-	//const newUserData: user = await request.json();
+
 	try {
 		const users = await prisma.user.findUnique({
 			where: {
@@ -34,6 +31,7 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 		throw e
 	}
 }
+
 export async function PUT(request: NextRequest, context: { params: FindById }) {
 	const newUserData: user = await request.json();
 
@@ -60,6 +58,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 			  throw e
 	}
 }
+
 export async function DELETE(
 	request: NextRequest,
 	context: { params: FindById }

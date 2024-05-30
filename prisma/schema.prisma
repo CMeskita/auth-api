@@ -27,7 +27,7 @@ model perfil {
 
 
 model user {
-  user_id           String   @id @unique @default(uuid()) @db.VarChar(255)
+  user_id           String @id @unique @default(uuid()) @db.VarChar(255)
   account_id        String    
   perfil_id         Int
   usuario           String    @db.VarChar(50)
