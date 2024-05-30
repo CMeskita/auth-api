@@ -1,4 +1,4 @@
-import { Prisma, user } from "@prisma/client";
+import { Prisma} from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken,decodifcarJwtToken,  getJwtSecretKey } from "@/lib/auth";
 import { SignJWT } from "jose";
