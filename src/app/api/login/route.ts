@@ -2,9 +2,10 @@
 import { criatedHash } from '@/lib/Hash';
 import { getJwtSecretKey } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { Prisma, user } from '@prisma/client';
+
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma, user } from '../../../../prisma/generated/client';
 
 
 export async function POST(request:NextRequest) {

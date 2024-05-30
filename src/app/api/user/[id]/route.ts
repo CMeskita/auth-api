@@ -1,8 +1,9 @@
 
 
 import prisma from '@/lib/prisma';
-import {Prisma, user } from '@prisma/client';
+//import {Prisma, user } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
+import { Prisma, user } from '../../../../../prisma/generated/client';
 
 
 type FindById = {

@@ -1,8 +1,8 @@
 
 import { criatedHash } from "@/lib/Hash";
 import prisma from "@/lib/prisma";
-import { Prisma, user } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma, user } from "../../../../prisma/generated/client";
 
 
 export async function POST(request: NextRequest) {

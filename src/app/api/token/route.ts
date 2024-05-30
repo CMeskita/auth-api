@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken,decodifcarJwtToken,  getJwtSecretKey } from "@/lib/auth";
 import { SignJWT } from "jose";
-import { Prisma } from "@prisma/client";
+import { Prisma} from '../../../../prisma/generated/client';
 
 export async function POST(request:NextRequest) {
    debugger;
