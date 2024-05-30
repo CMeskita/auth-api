@@ -33,6 +33,7 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 }
 
 export async function PUT(request: NextRequest, context: { params: FindById }) {
+	
 	const newUserData = await request.json();
 
 	try {
