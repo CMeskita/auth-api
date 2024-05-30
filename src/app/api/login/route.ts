@@ -2,8 +2,7 @@
 import { criatedHash } from '@/lib/Hash';
 import { getJwtSecretKey } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
-
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -50,13 +49,13 @@ try {
     }
     return NextResponse.json({ success: false });
 } catch (e) {
-  if (e instanceof Prisma.PrismaClientKnownRequestError) {
-    // The .code property can be accessed in a type-safe manner
-    if (e.code === 'P2002') {
-      console.log(
-        'Há uma violação de restrição exclusiva. Um novo usuário não pode ser criado com este e-mail'
-      )
-    }
+  if (e instanceof PrismaClientKnownRequestError) {
+
+      return new NextResponse(JSON.stringify({ message: e.message }), {
+				status: 500,
+				statusText: 'Error',
+			});
+
       }
       throw e
 }
