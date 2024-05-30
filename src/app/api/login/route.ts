@@ -50,11 +50,13 @@ try {
     }
     return NextResponse.json({ success: false });
 } catch (e) {
-      if (e instanceof Prisma.PrismaClientUnknownRequestError) {
-        return new NextResponse(JSON.stringify({ message: e.message }), {
-          status: 500,
-          statusText: 'Error',
-        });
+  if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    // The .code property can be accessed in a type-safe manner
+    if (e.code === 'P2002') {
+      console.log(
+        'Há uma violação de restrição exclusiva. Um novo usuário não pode ser criado com este e-mail'
+      )
+    }
       }
       throw e
 }
