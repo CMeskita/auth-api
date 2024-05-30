@@ -6,16 +6,16 @@ import { NextResponse, NextRequest } from 'next/server';
 
 
 type FindById = {
-	user_id : string
+	id : string
 };
 
 export async function GET(request: NextRequest, context: { params: FindById }) {
 	debugger;
-	//const newUserData: user = await request.json();
+
 	try {
 		const users: user = await prisma.user.findUniqueOrThrow({
 			where: {
-				user_id : String(context.params.user_id ),
+				user_id : String(context.params.id ),
 			},
 		});
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 		
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			return new NextResponse(JSON.stringify({ message: e.message }), {
-				status: 404,
+				status: 500,
 				statusText: 'Error',
 			});
 		}
@@ -41,7 +41,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 	try {
 		const updatedUser = await prisma.user.update({
 			where: {
-				user_id : String(context.params.user_id ),
+				user_id : String(context.params.id ),
 			},
 			data: newUserData,
 		});
@@ -54,21 +54,18 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 		
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				  return new NextResponse(JSON.stringify({ message: e.message }), {
-					  status: 404,
+					  status: 500,
 					  statusText: 'Error',
 				  });
 			  }
 			  throw e
 	}
 }
-export async function DELETE(
-	request: NextRequest,
-	context: { params: FindById }
-) {
+export async function DELETE(request: NextRequest,context: { params: FindById }) {
 	try {
 		await prisma.user.delete({
 			where: {
-				user_id : String(context.params.user_id),
+				user_id : String(context.params.id),
 			},
 		});
 
@@ -78,10 +75,13 @@ export async function DELETE(
 		});
 	} catch (e) {		
 		
-			return new NextResponse(JSON.stringify({ message:"Error" }), {
+		if (e instanceof Prisma.PrismaClientKnownRequestError) {
+			return new NextResponse(JSON.stringify({ message: e.message }), {
 				status: 500,
 				statusText: 'Error',
 			});
+		}
+		throw e
 		
 		throw e
 	}
