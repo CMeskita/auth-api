@@ -1,5 +1,4 @@
 import prisma from '@/lib/prisma';
-import {user } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { NextResponse, NextRequest } from 'next/server';
 
@@ -34,10 +33,10 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 }
 
 export async function PUT(request: NextRequest, context: { params: FindById }) {
-	const newUserData: user = await request.json();
+	const newUserData = await request.json();
 
 	try {
-		const updatedUser: user = await prisma.user.update({
+		const updatedUser = await prisma.user.update({
 			where: {
 				user_id : String(context.params.id ),
 			},
