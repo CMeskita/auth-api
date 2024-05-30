@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 
 type FindById = {
-	user_id : string;
+	user_id : string
 };
 
 export async function GET(request: NextRequest, context: { params: FindById }) {
