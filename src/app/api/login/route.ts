@@ -1,8 +1,8 @@
 
-import { criatedHash } from "@/lib/Hash";
-import { getJwtSecretKey } from "@/lib/auth";
-import prisma from "@/lib/prisma";
-import { Prisma, user } from "@prisma/client";
+import { criatedHash } from '@/lib/Hash';
+import { getJwtSecretKey } from '@/lib/auth';
+import prisma from '@/lib/prisma';
+import { Prisma, user } from '@prisma/client';
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
