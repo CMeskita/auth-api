@@ -6,15 +6,17 @@ import { NextResponse, NextRequest } from 'next/server';
 
 
 type FindById = {
-	user_id : string;
-};
+	id : string
+}
 
 export async function GET(request: NextRequest, context: { params: FindById }) {
+	debugger;
+	//const newUserData: user = await request.json();
 	try {
-		const users: user = await prisma.user.findUniqueOrThrow({
+		const users = await prisma.user.findUnique({
 			where: {
-				user_id : String(context.params.user_id ),
-			},
+				user_id : String(context.params.id )
+			}
 		});
 
 		return new NextResponse(JSON.stringify(users), {
@@ -38,7 +40,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 	try {
 		const updatedUser: user = await prisma.user.update({
 			where: {
-				user_id : String(context.params.user_id ),
+				user_id : String(context.params.id ),
 			},
 			data: newUserData,
 		});
@@ -65,7 +67,7 @@ export async function DELETE(
 	try {
 		await prisma.user.delete({
 			where: {
-				user_id : String(context.params.user_id),
+				user_id : String(context.params.id),
 			},
 		});
 
