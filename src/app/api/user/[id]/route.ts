@@ -1,19 +1,19 @@
 import prisma from '@/lib/prisma';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { Prisma,user } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
 
 
 type FindById = {
-	id : string
-}
+	user_id : string;
+};
 
 export async function GET(request: NextRequest, context: { params: FindById }) {
 
 	try {
-		const users = await prisma.user.findUnique({
+		const users: user = await prisma.user.findUniqueOrThrow({
 			where: {
-				user_id : String(context.params.id )
-			}
+				user_id : String(context.params.user_id ),
+			},
 		});
 
 		return new NextResponse(JSON.stringify(users), {
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, context: { params: FindById }) {
 		});
 	} catch (e) {
 		
-		if (e instanceof PrismaClientKnownRequestError) {
+		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			return new NextResponse(JSON.stringify({ message: e.message }), {
 				status: 404,
 				statusText: 'Error',
@@ -39,7 +39,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 	try {
 		const updatedUser = await prisma.user.update({
 			where: {
-				user_id : String(context.params.id ),
+				user_id : String(context.params.user_id ),
 			},
 			data: newUserData,
 		});
@@ -50,7 +50,7 @@ export async function PUT(request: NextRequest, context: { params: FindById }) {
 		});
 	} catch (e) {
 		
-			if (e instanceof PrismaClientKnownRequestError) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				  return new NextResponse(JSON.stringify({ message: e.message }), {
 					  status: 404,
 					  statusText: 'Error',
@@ -67,7 +67,7 @@ export async function DELETE(
 	try {
 		await prisma.user.delete({
 			where: {
-				user_id : String(context.params.id),
+				user_id : String(context.params.user_id),
 			},
 		});
 
